@@ -261,20 +261,19 @@ kbd {
 
 .touch-controls {
     display: none;
-    gap: 12px;
-    margin-top: 14px;
-    align-items: center;
 }
 
 .touch-stick {
     width: 104px;
     aspect-ratio: 1;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(15, 23, 42, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.22);
     position: relative;
     flex: 0 0 auto;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.38);
     touch-action: none;
+    backdrop-filter: blur(10px);
 }
 
 .stick-thumb {
@@ -291,20 +290,30 @@ kbd {
 
 .touch-actions {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(72px, 1fr));
     gap: 8px;
-    flex: 1;
+    width: min(48vw, 220px);
 }
 
 .touch-actions button {
-    padding: 11px 10px;
+    min-height: 44px;
+    padding: 10px 8px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(244, 114, 182, 0.86);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.32);
     font-size: 13px;
+    touch-action: manipulation;
+    backdrop-filter: blur(10px);
+}
+
+.touch-actions button[data-action="pause"] {
+    background: rgba(255, 255, 255, 0.22);
 }
 
 @media (pointer: coarse), (max-width: 980px) {
     body {
         overflow: auto;
-        padding: 18px 0;
+        padding: 14px 0 168px;
     }
 
     .wrap {
@@ -312,7 +321,25 @@ kbd {
     }
 
     .touch-controls {
+        position: fixed;
+        left: max(12px, env(safe-area-inset-left));
+        right: max(12px, env(safe-area-inset-right));
+        bottom: max(12px, env(safe-area-inset-bottom));
+        z-index: 10;
         display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 12px;
+        pointer-events: none;
+    }
+
+    .touch-stick,
+    .touch-actions {
+        pointer-events: auto;
+    }
+
+    .touch-stick {
+        width: clamp(86px, 24vw, 112px);
     }
 }
 
@@ -329,13 +356,23 @@ kbd {
         font-size: 12px;
     }
 
-    .buttons,
-    .touch-controls {
+    .buttons {
         flex-direction: column;
         align-items: stretch;
     }
 
-    .touch-stick {
-        align-self: center;
+    .touch-controls {
+        flex-direction: row;
+        align-items: flex-end;
+    }
+
+    .touch-actions {
+        width: min(52vw, 208px);
+        grid-template-columns: repeat(2, minmax(66px, 1fr));
+    }
+
+    .touch-actions button {
+        min-height: 42px;
+        font-size: 12px;
     }
 }
