@@ -1,16 +1,90 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Survival Game</title>
     <link rel="stylesheet" href="./style.css">
-    <script type="module" src="./main.js"></script>
+    <script src="./gameState.js" defer></script>
+    <script src="./entities.js" defer></script>
+    <script src="./input.js" defer></script>
+    <script src="./ui.js" defer></script>
+    <script src="./main.js" defer></script>
 </head>
 <body>
-    <main id="app" class="app">
-        <h1>Survival Game</h1>
-        <p>Welcome to Survival Game</p>
-    </main>
+    <div class="wrap" id="app">
+        <section class="game-shell" aria-label="サバイバルゲーム">
+            <canvas id="game" width="820" height="580" aria-label="サバイバルゲーム画面"></canvas>
+            <div class="toast" id="toast" role="status" aria-live="polite"></div>
+            <div class="game-over" id="gameOver" aria-live="assertive">
+                <div>
+                    <h2>GAME OVER</h2>
+                    <p id="finalText">サバイバル終了</p>
+                    <button type="button" data-action="restart">もう一度遊ぶ</button>
+                </div>
+            </div>
+        </section>
+
+        <aside class="panel" aria-label="ステータスと操作">
+            <h1>Sandbox Survival</h1>
+            <p class="sub">木と石を集め、食料を確保し、夜の敵から生き延びるミニサバイバル。</p>
+
+            <div class="meters">
+                <div>
+                    <div class="meter-label"><span>HP</span><span id="hpText">100</span></div>
+                    <div class="bar"><div class="fill" id="hpBar"></div></div>
+                </div>
+                <div>
+                    <div class="meter-label"><span>満腹度</span><span id="hungerText">100</span></div>
+                    <div class="bar"><div class="fill hunger" id="hungerBar"></div></div>
+                </div>
+                <div>
+                    <div class="meter-label"><span>スタミナ</span><span id="staminaText">100</span></div>
+                    <div class="bar"><div class="fill stamina" id="staminaBar"></div></div>
+                </div>
+            </div>
+
+            <div class="stat-grid">
+                <div class="stat">木材<b id="wood">0</b></div>
+                <div class="stat">石<b id="stone">0</b></div>
+                <div class="stat">ベリー<b id="berries">0</b></div>
+                <div class="stat">生存日数<b id="days">0</b></div>
+            </div>
+
+            <div class="help">
+                <b>操作</b><br>
+                <kbd>WASD</kbd> / <kbd>矢印</kbd> 移動、<kbd>Shift</kbd> ダッシュ<br>
+                <kbd>E</kbd> 採取、<kbd>Space</kbd> 攻撃、<kbd>F</kbd> 食べる<br>
+                <kbd>C</kbd> 焚き火クラフト、<kbd>H</kbd> 小屋クラフト、<kbd>P</kbd> 一時停止
+            </div>
+
+            <div class="craft">
+                <b>クラフト</b><br>
+                焚き火: 木材5 + 石3。夜の敵を少し遠ざける。<br>
+                小屋: 木材16 + 石10。近くにいると夜のダメージを軽減する。
+            </div>
+
+            <h3>ログ</h3>
+            <div class="log" id="log"></div>
+
+            <div class="buttons">
+                <button type="button" data-action="restart">リスタート</button>
+                <button type="button" class="secondary" data-action="pause" id="pauseBtn">一時停止</button>
+            </div>
+
+            <div class="touch-controls" aria-label="タッチ操作">
+                <div class="touch-stick" id="touchStick" aria-label="移動パッド">
+                    <div class="stick-thumb" id="stickThumb"></div>
+                </div>
+                <div class="touch-actions">
+                    <button type="button" data-action="gather">採取</button>
+                    <button type="button" data-action="attack">攻撃</button>
+                    <button type="button" data-action="eat">食べる</button>
+                    <button type="button" data-action="campfire">焚き火</button>
+                    <button type="button" data-action="hut">小屋</button>
+                </div>
+            </div>
+        </aside>
+    </div>
 </body>
 </html>
