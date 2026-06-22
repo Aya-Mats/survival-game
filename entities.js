@@ -79,6 +79,11 @@
         ctx.fillRect(snap(x), snap(y), width, height);
     }
 
+    function groundPx(ctx, x, y, width, height, color) {
+        ctx.fillStyle = color;
+        ctx.fillRect(Math.floor(x), Math.floor(y), width, height);
+    }
+
     function drawPixelShadow(ctx, x, y, width, height, alpha = 0.22) {
         ctx.fillStyle = `rgba(43, 31, 21, ${alpha})`;
         ctx.fillRect(snap(x - width / 2), snap(y - height / 2), width, height);
@@ -104,15 +109,15 @@
                 const noise = seed - Math.floor(seed);
                 const base = noise > 0.66 ? "#7eaa5b" : noise > 0.32 ? "#6f9d55" : "#638f4d";
 
-                px(ctx, x, y, TILE, TILE, base);
+                groundPx(ctx, x, y, TILE + 1, TILE + 1, base);
 
                 if (noise > 0.78) {
-                    px(ctx, x + 6, y + 9, 4, 10, "#8fbc65");
-                    px(ctx, x + 10, y + 13, 4, 6, "#4f7f40");
-                    px(ctx, x + 22, y + 22, 4, 6, "#8fbc65");
+                    groundPx(ctx, x + 6, y + 9, 4, 10, "#8fbc65");
+                    groundPx(ctx, x + 10, y + 13, 4, 6, "#4f7f40");
+                    groundPx(ctx, x + 22, y + 22, 4, 6, "#8fbc65");
                 } else if (noise < 0.18) {
-                    px(ctx, x + 4, y + 24, 8, 4, "#527d44");
-                    px(ctx, x + 20, y + 6, 4, 4, "#91b96f");
+                    groundPx(ctx, x + 4, y + 24, 8, 4, "#527d44");
+                    groundPx(ctx, x + 20, y + 6, 4, 4, "#91b96f");
                 }
             }
         }
