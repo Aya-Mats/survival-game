@@ -259,6 +259,90 @@ kbd {
     margin: 0 0 18px;
 }
 
+.feedback-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.feedback-pop {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 0;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.55);
+    animation: feedback-pop 0.72s ease-out forwards;
+}
+
+.feedback-pop.wood { color: #fde68a; }
+.feedback-pop.stone { color: #dbeafe; }
+.feedback-pop.berry,
+.feedback-pop.eat { color: #fecdd3; }
+.feedback-pop.attack { color: #fef3c7; }
+.feedback-pop.damage { color: #fecaca; }
+.feedback-pop.campfire { color: #fed7aa; }
+.feedback-pop.hut { color: #bbf7d0; }
+
+.game-shell.feedback-flash::after,
+.game-shell.feedback-hit::after,
+.game-shell.feedback-warm::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    animation: feedback-flash 0.28s ease-out forwards;
+}
+
+.game-shell.feedback-flash::after {
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.game-shell.feedback-hit::after {
+    background: rgba(248, 113, 113, 0.2);
+}
+
+.game-shell.feedback-warm::after {
+    background: rgba(251, 191, 36, 0.18);
+}
+
+.game-shell.feedback-shake {
+    animation: feedback-shake 0.16s linear;
+}
+
+@keyframes feedback-pop {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -10%) scale(0.82);
+    }
+
+    18% {
+        opacity: 1;
+        transform: translate(-50%, -48%) scale(1.08);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -128%) scale(1);
+    }
+}
+
+@keyframes feedback-flash {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes feedback-shake {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-3px, 2px); }
+    50% { transform: translate(3px, -2px); }
+    75% { transform: translate(-2px, -1px); }
+}
+
 .touch-controls {
     display: none;
 }
